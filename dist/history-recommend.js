@@ -36,20 +36,24 @@ const HistoryRecommend=(()=>{
   return out;
  }
 
+ // Editorial associations for this experience; not a traditional vocational diagnosis.
+ const dayStemJobs={
+  갑:{element:'목',typeId:'0',jobId:'J05',jobName:'관상감 천문학 관원',personId:'P09'},
+  을:{element:'목',typeId:'5',jobId:'J02',jobName:'역관',personId:'P18'},
+  병:{element:'화',typeId:'2',jobId:'J03',jobName:'화원',personId:'P03'},
+  정:{element:'화',typeId:'4',jobId:'J04',jobName:'의녀',personId:'P07'},
+  무:{element:'토',typeId:'0',jobId:'J14',jobName:'농민',personId:'P14'},
+  기:{element:'토',typeId:'6',jobId:'J06',jobName:'산원',personId:'P06'},
+  경:{element:'금',typeId:'1',jobId:'J01',jobName:'사관',personId:'P12'},
+  신:{element:'금',typeId:'3',jobId:'J10',jobName:'장인',personId:'P08'},
+  임:{element:'수',typeId:'6',jobId:'J13',jobName:'상인',personId:'P04'},
+  계:{element:'수',typeId:'0',jobId:'J05',jobName:'관상감 천문학 관원',personId:'P09'}
+ };
  function recommendType(answers,chart){
-  if(!answers||!['risk','community','lead','activity','interest'].every(k=>[0,1].includes(answers[k])))return null;
-  const a=answers,e=chart?.pillars?.day?.stable?chart.dayElement:null;
-  let id,reason;
-  if(e==='목'){id=a.activity===1?'0':'2';reason='성장의 상징에 '+(a.activity===1?'자료를 읽고 원리를 찾는 연구':'손으로 만들고 고치는 작업')+'를 고른 답을 연결했어요.';}
-  else if(e==='화'){id=a.interest===0?'5':'2';reason='표현의 상징에 '+(a.interest===0?'새로운 사람과 만나고 교류하기':'혼자 관찰하고 기록하기')+'를 고른 답을 연결했어요.';}
-  else if(e==='토'){id=a.lead===0?'6':'4';reason='돌봄의 상징에 '+(a.lead===0?'방향을 정하고 책임지는 역할':'곁에서 조율하고 함께 만드는 역할')+'을 고른 답을 연결했어요.';}
-  else if(e==='금'){id=a.activity===0?'3':'1';reason='정돈의 상징에 '+(a.activity===0?'손으로 만들고 고치는 작업':'자료를 읽고 원리를 찾는 연구')+'를 고른 답을 연결했어요.';}
-  else if(e==='수'){id=a.interest===1&&a.risk===0?'1':'0';reason=id==='1'?'탐구의 상징에 관찰·기록과 안정을 고른 답을 연결했어요.':a.risk===1?'탐구의 상징에 도전을 고른 답을 연결했어요.':'탐구의 상징에 새로운 사람과의 교류를 고른 답을 연결했어요.';}
-  else{
-   id=a.activity===1?(a.interest===1?'1':'0'):a.community===1?(a.lead===1?'4':'6'):a.interest===0&&a.lead===1?'5':a.risk===1?'2':'3';
-   reason='일간이 확정되지 않아 사주 상징은 사용하지 않고, 다섯 질문의 답만으로 고른 탐색 제안이에요.';
-  }
-  return {typeId:id,type:data.types.find(t=>t.id===id),reason,usesSaju:['목','화','토','금','수'].includes(e)};
+  const day=chart?.pillars?.day,rule=day?.stable&&dayStemJobs[day.stem];
+  if(!rule||rule.element!==chart.dayElement)return null;
+  return {...rule,type:data.types.find(t=>t.id===rule.typeId),basis:day.stem+rule.element,usesSaju:true,
+   reason:day.stem+rule.element+'의 상징에 '+rule.jobName+'을 연결한 서비스의 체험용 추천입니다.'};
  }
 
  return {validate,recommend,recommendType};

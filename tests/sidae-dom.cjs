@@ -50,11 +50,24 @@ const tick=()=>new Promise(r=>setImmediate(r)),run=s=>vm.runInContext(s,dom.getI
  fs.writeFileSync(path.join(out,'saju-fire.png'),buffer);downloads--;
  run('Sidae.profile.chart='+fullChart+';Sidae.analysis()');
 
- run("Sidae.profile.chart=SidaeCore.calculate({year:1992,month:10,day:29,hour:12,minute:0,lunar:false,leap:false,unknown:false,boundary:'midnight'},Manseryeok);Sidae.profile.answers.lead=0;Sidae.analysis()");
+ run("Sidae.profile.chart=SidaeCore.calculate({year:1992,month:10,day:30,hour:12,minute:0,lunar:false,leap:false,unknown:false,boundary:'midnight'},Manseryeok);Sidae.profile.answers.lead=0;Sidae.analysis()");
  assert.equal(w.document.querySelector('[data-saju-match] .history-job-image img').getAttribute('src'),'assets/kuong/accountant.png');
  drawnText=[];await run('Sidae.sajuCard()');assert.ok(drawnText.some(t=>t.includes('산원')));assert.ok(buffer.length>10000);
  fs.writeFileSync(path.join(out,'saju-accountant.png'),buffer);downloads--;
  run('Sidae.profile.chart='+fullChart+';Sidae.profile.answers.lead=1;Sidae.analysis()');
+ // Real calendar fixtures exercise all ten stems, nine job labels and matching saved PNGs.
+ const stemCards=[[5,'관상감 천문학 관원','scholar'],[6,'역관','interpreter'],[7,'화원','painter'],[8,'의녀','physician'],[9,'농민','farmer.png'],[10,'산원','accountant.png'],[1,'사관','scholar'],[2,'장인','artisan'],[3,'상인','merchant'],[4,'관상감 천문학 관원','scholar']];
+ for(const [day,job,art]of stemCards){
+  run('Sidae.profile.chart=SidaeCore.calculate({year:1992,month:10,day:'+day+',hour:12,minute:0,unknown:false,boundary:"midnight"},Manseryeok);Sidae.analysis()');
+  const box=w.document.querySelector('[data-saju-match]');assert.ok(box.textContent.includes('대표 직업 · '+job));
+  if(art.endsWith('.png'))assert.ok(box.querySelector('img').getAttribute('src').endsWith(art));
+  else assert.equal(box.querySelector('[data-kuong]').dataset.kuong,art);
+  drawnText=[];await run('Sidae.sajuCard()');assert.ok(drawnText.includes(job));assert.ok(buffer.length>10000);
+  fs.writeFileSync(path.join(out,'stem-'+day+'.png'),buffer);downloads--;
+ }
+ run('Sidae.profile.chart.pillars.day.stable=false;Sidae.analysis()');assert.equal(w.document.querySelector('[data-saju-match]'),null);assert.ok(w.document.querySelector('[data-saju-match-unresolved]'));
+ run('Sidae.profile.chart='+fullChart+';Sidae.analysis()');
+ console.log('PASS all 9 representative jobs in screen and PNG, all ten actual day stems, matching Kuong art, unresolved day explanation');
  let sharedCard;w.navigator.canShare=()=>true;w.navigator.share=async value=>{sharedCard=value;};
  await run('Sidae.sajuCard(true)');assert.equal(sharedCard.files.length,1);assert.match(sharedCard.files[0].name,/사색가/);assert.equal(sharedCard.files[0].type,'image/png');assert.equal(downloads,1);
  w.navigator.canShare=()=>false;
@@ -113,3 +126,4 @@ const tick=()=>new Promise(r=>setImmediate(r)),run=s=>vm.runInContext(s,dom.getI
  click('[data-action="privacy"]');click('[data-action="clear"]');assert.equal(w.localStorage.getItem('last-tool.v1'),null);assert.equal(w.localStorage.getItem('sidae.profile.v1'),null);
  console.log('PASS DOM integrated form → pillars → explorer default + 3 jobs/3 people → personalized intro → 3 tracked choices → comparison → 8 real PNG cards; restart, input toggles, delete, birth privacy.');console.log('PNG cards:',out);dom.window.close();
 })().catch(e=>{console.error(e);dom.window.close();process.exitCode=1;});
+
