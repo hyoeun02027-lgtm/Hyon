@@ -4,7 +4,7 @@ const base={year:1992,month:10,day:24,hour:5,minute:30};
 const c=C.calculate(base,m);assert.deepEqual(Object.values(c.pillars).map(p=>p.candidates[0]),['임신','경술','계유','을묘']);assert.equal(Object.values(c.elements).reduce((a,b)=>a+b),8);
 const lunar=C.calculate({...base,month:9,day:29,lunar:true},m);assert.deepEqual(lunar.pillars,c.pillars);
 const leap=C.calculate({year:2020,month:4,day:1,hour:12,minute:0,lunar:true,leap:true},m);assert.equal(JSON.stringify(leap.solar),JSON.stringify({year:2020,month:5,day:23}));
-for(const input of [{...base,day:32},{...base,month:2,day:30},{...base,month:13},{...base,year:1988},{...base,leap:true},{...base,lunar:true,leap:true,month:1},{...base,hour:24},{...base,minute:60}])assert.throws(()=>C.calculate(input,m));
+for(const input of [{...base,day:32},{...base,month:2,day:30},{...base,month:13},{...base,year:1899},{...base,leap:true},{...base,lunar:true,leap:true,month:1},{...base,hour:24},{...base,minute:60}])assert.throws(()=>C.calculate(input,m));
 const unknown=C.calculate({...base,unknown:true},m);assert.equal(unknown.pillars.hour.unknown,true);assert.equal(unknown.pillars.hour.candidates.length,0);assert.equal(Object.values(unknown.elements).reduce((a,b)=>a+b),6);
 const a=C.calculate({year:2024,month:2,day:4,hour:17,minute:26},m),b=C.calculate({year:2024,month:2,day:4,hour:17,minute:27},m);assert.notDeepEqual(a.pillars.year.candidates,b.pillars.year.candidates);assert.notDeepEqual(a.pillars.month.candidates,b.pillars.month.candidates);
 const boundaryUnknown=C.calculate({year:2024,month:2,day:4,unknown:true},m);assert.equal(boundaryUnknown.ambiguous,true);assert.equal(boundaryUnknown.pillars.year.candidates.length,2);assert.equal(boundaryUnknown.pillars.month.candidates.length,2);

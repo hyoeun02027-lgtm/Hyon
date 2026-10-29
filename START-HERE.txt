@@ -1,7 +1,20 @@
-시대인재 공동 작업용 소스
+시대인재 소스코드 공유본
+쿠옹이 표지/표정 반영 버전: a0087772d759c5a9ffef0676b03df1a8b415431a
 
-압축 해제 후 sidae-source 안의 dist, content, scripts, tests, sources 폴더와 파일을 GitHub에 업로드하세요. ZIP 자체를 올리는 것이 아닙니다.
+1. ZIP을 먼저 압축 해제하세요. 폴더 구조를 그대로 유지하세요.
+2. sidae 폴더에서 터미널을 열고 Python 3으로 실행하세요:
+   python3 -m http.server 8000 --directory dist
+   Windows에서는 python -m http.server 8000 --directory dist
+3. 브라우저에서 http://localhost:8000 을 여세요.
+   index.html을 더블클릭하면 JSON 로딩이 차단될 수 있습니다.
 
-실행: Python이 설치된 PC에서 이 폴더의 터미널을 열고 python -m http.server 8000 --directory dist 를 실행한 뒤 http://localhost:8000 에 접속합니다. index.html을 더블클릭하면 JSON 로딩이 막힐 수 있습니다.
+실제 사이트 파일: dist/
+쿠옹이 이미지: dist/assets/kuong/
+쿠옹이 UI: dist/kuong.js, dist/kuong.css
+성향/추천 화면: dist/sidae.js
+나머지 구조와 검증 안내: README.md
 
-현재 공개 사이트의 자동 배포 연결은 포함하지 않았습니다. GitHub 수정 사항은 별도로 현재 사이트에 반영해야 합니다. 원고 PDF와 소설 본문이 포함되어 있으므로 협업용 Private 저장소에서 사용하세요.
+GitHub에 올릴 때는 ZIP 자체가 아닌 압축 해제한 sidae 폴더 안의
+파일과 하위 폴더를 함께 올리세요. dist 등의 폴더를 펼쳐 파일만 올리면 안 됩니다.
+이 공유본에는 기존 사이트 계정 연결 설정과 Git 인증 정보가 없습니다.
+수정한 ZIP이나 GitHub 코드는 기존 공개 사이트에 자동 반영되지 않습니다.

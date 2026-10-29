@@ -18,10 +18,10 @@ class El{
 for(const id of ['app','modal','modalBody','resumeNav','toast'])elements.set(id,new El('div',{id}));
 const doc={body:new El('body'),hidden:false,getElementById:id=>elements.get(id),addEventListener:(n,f)=>(events[n]??=[]).push(f),querySelector:sel=>controls.findLast(x=>sel===`[data-vn="${x.dataset.vn}"]`),querySelectorAll:sel=>controls.filter(x=>sel==='[data-setting]'&&x.dataset.setting)};
 const ctx=vm.createContext({document:doc,window:{addEventListener(){},matchMedia:()=>({matches:false}),scrollTo(){},getSelection:()=>({toString:()=>''})},VNCore:require('../dist/vn-core.js'),SidaeCore:require('../dist/sidae-core.js'),performance:{now:()=>tick},localStorage:{getItem:k=>storage.get(k)||null,setItem:(k,v)=>storage.set(k,v),removeItem:k=>storage.delete(k)},setTimeout:(f,ms)=>{const id=tid++;timers.set(id,{f,ms});return id;},setInterval:(f,ms)=>{const id=tid++;timers.set(id,{f,ms});return id;},clearTimeout:id=>timers.delete(id),clearInterval:id=>timers.delete(id),fetch:async url=>({ok:true,json:async()=>url==='novel.json'?book:story}),console});
-for(const f of ['dist/vn.js','dist/sidae.js','dist/app.js'])vm.runInContext(fs.readFileSync(f,'utf8'),ctx);
+for(const f of ['dist/vn.js','dist/kuong.js','dist/sidae.js','dist/app.js'])vm.runInContext(fs.readFileSync(f,'utf8'),ctx);
 const run=s=>vm.runInContext(s,ctx);
 function click(el){const e={target:el,stopPropagation(){},defaultPrevented:false};for(const f of events.click||[])f(e);}
-(async()=>{await new Promise(r=>setImmediate(r));assert.match(elements.get('app').innerHTML,/역사 속 나를 발견하기/);
+(async()=>{await new Promise(r=>setImmediate(r));assert.match(elements.get('app').innerHTML,/나의 역사적 직업 알아보기/);
 for(const route of Object.keys(story.outcomes)){
  run("state={path:'',beat:0,page:0,phase:'text',view:'read',started:true};go('read')");
  const actor=elements.get('actor-yun'),stage=elements.get('vn-stage');
