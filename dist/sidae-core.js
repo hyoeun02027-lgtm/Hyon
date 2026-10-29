@@ -1,5 +1,6 @@
 (function(root){'use strict';
 const weights={values:.4,interests:.3,symbolic:.3};
+const birthYears=Object.freeze({min:1900,max:Math.min(2100,new Date(Date.now()+9*60*60*1000).getUTCFullYear())});
 const questions=[
  {id:'risk',title:'새로운 일을 앞두었을 때',options:['검증된 방식으로 안정을 지킨다','실패 가능성이 있어도 도전한다']},
  {id:'community',title:'오래 남기고 싶은 것은',options:['내 이름으로 완성한 한 작품','여럿이 함께 이어가는 성과']},
@@ -21,7 +22,7 @@ const endings={AAA:['남겨진 한 획','#b5a17a'],AAB:['말 없는 교본','#91
 const choiceValues={A:['완결','개인'],B:['위임','공동체'],AA:['완결','책임'],AB:['협력','전환'],BA:['안정','책임'],BB:['학습','협력'],AAA:['완결','개인'],AAB:['전수','공동체'],ABA:['기준','개인'],ABB:['공동체','전수'],BAA:['완결','안정'],BAB:['전수','돌봄'],BBA:['독립','학습'],BBB:['공동체','전수']};
 function calculate(input,m){
  const {year,month,day,unknown=false,boundary='midnight'}=input;
- if(!Number.isInteger(year)||year<1990||year>2026)throw Error('현재 입력 범위는 1990~2026년입니다. 한국 표준시(UTC+9)를 사용합니다.');
+ if(!Number.isInteger(year)||year<birthYears.min||year>birthYears.max)throw Error('출생 연도는 '+birthYears.min+'년부터 '+birthYears.max+'년까지 입력할 수 있습니다.');
  if(!['midnight','jasi','splitJasi'].includes(boundary))throw Error('날짜 경계 기준을 확인해 주세요.');
  if(input.leap&&!input.lunar)throw Error('윤달은 음력에서만 선택할 수 있습니다.');
  const solar=input.lunar?m.lunarToSolar(year,month,day,!!input.leap):{year,month,day};
@@ -53,5 +54,5 @@ function record(records,path,title,now=new Date().toISOString()){
 function compare(answers,path){if(!answers)return {same:[],different:[]};const same=[],different=[];
  const tests=[{label:answers.community?'공동체의 성과':'개인의 완성',same:answers.community?path[0]==='B':path[0]==='A',text:'첫 선택에서 '+(path[0]==='B'?'일감을 윤서에게 맡겼습니다.':'일감을 직접 완성하려 했습니다.')},{label:answers.lead?'함께 만드는 역할':'직접 책임지는 역할',same:answers.lead?path[1]==='B':path[1]==='A',text:'위기 앞에서 '+(path[1]==='B'?'기준틀로 작업을 나누었습니다.':'스스로 작업을 감당했습니다.')}];
  for(const t of tests)(t.same?same:different).push(t);return {same,different};}
-const api={weights,questions,catalog,symbolism,endings,choiceValues,choiceImpacts,calculate,recommend,record,compare};root.SidaeCore=api;if(typeof module!=='undefined')module.exports=api;
+const api={birthYears,weights,questions,catalog,symbolism,endings,choiceValues,choiceImpacts,calculate,recommend,record,compare};root.SidaeCore=api;if(typeof module!=='undefined')module.exports=api;
 })(typeof globalThis!=='undefined'?globalThis:this);

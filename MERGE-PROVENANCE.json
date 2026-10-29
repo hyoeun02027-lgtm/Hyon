@@ -1,0 +1,60 @@
+{
+  "input": "sidae-source.zip",
+  "input_sha256": "a247b5b1d6c4e3509e65dbda94da0804f3d14e1b0141fc355bc856015878d728",
+  "reviewed_base_commit": "8f3044ad369e2ad4ab8abcfdec3c5a03f687eb14",
+  "unchanged_friend_files": [
+    "extract.py",
+    "README.md",
+    "START-HERE.txt",
+    "content/expanded-scenes.txt",
+    "dist/app.js",
+    "dist/kuong.css",
+    "dist/kuong.js",
+    "dist/manuscript.pdf",
+    "dist/novel.css",
+    "dist/novel.json",
+    "dist/sidae.css",
+    "dist/story.json",
+    "dist/style.css",
+    "dist/vn-core.js",
+    "dist/vn.js",
+    "dist/assets/cast-expressions.png",
+    "dist/assets/joseon-sprites.png",
+    "dist/assets/kuong/cover.png",
+    "dist/assets/kuong/sheet.png",
+    "dist/fonts/LICENSE.txt",
+    "dist/fonts/reading.woff",
+    "dist/vendor/manseryeok.js",
+    "dist/vendor/manseryeok.LICENSE",
+    "scripts/build-novel.py",
+    "scripts/expand-scenes.py",
+    "scripts/verify-kasi.mjs",
+    "sources/manifest.json",
+    "sources/manuscript-18.pdf",
+    "sources/manuscript-23.pdf",
+    "sources/manuscript-45.pdf",
+    "sources/manuscript-67.pdf",
+    "tests/novel-core.cjs",
+    "tests/novel-ui.cjs",
+    "tests/source-audit.py"
+  ],
+  "original_friend_artwork_sha256": {
+    "dist/assets/kuong/cover.png": "e5a1154acbc76466e04dbdf39a9e523c6c2433240754a4d231669840d02778f5",
+    "dist/assets/kuong/sheet.png": "3bed01f14d3de3eb9d7b52f46c981d78e2bd1a23455d8b04dab4b2eb0e65e67f"
+  },
+  "changed_existing_friend_files": [
+    "dist/index.html",
+    "dist/sidae-core.js",
+    "dist/sidae.js",
+    "dist/vendor/PROVENANCE.md",
+    "tests/sidae-core.cjs",
+    "tests/sidae-dom.cjs"
+  ],
+  "new_app_files": [
+    "dist/history-data.js",
+    "dist/history-recommend.js",
+    "dist/history-ui.js",
+    "dist/history-ui.css"
+  ],
+  "deployment": "Separate public Site; existing GitHub Hyon and original last-tool Site unchanged"
+}

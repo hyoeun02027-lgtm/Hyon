@@ -8,7 +8,7 @@
 - Calculation runs locally; no analytics, no AI calculation, no live KASI API call.
 - Upstream source tested: 72/72 tests passed, including golden fixtures, calendar round trips and lunar-javascript cross-validation. This is not certification by KASI.
 - Engine calendar tables use KASI-derived data as documented upstream. KASI XML conversion API requires a service key and has not been live-verified in this environment.
-- UI intentionally supports input years 1990–2026, fixed UTC+9 (no Korean historical DST in this interval); no overseas/local apparent solar time conversion. Dates beyond today rejected.
+- UI supports input years 1900 through the current KST year, capped at 2100 by the bundled lunar table. Dates beyond today are rejected. Fixed UTC+9 remains in use; historical Korean time-zone/DST offsets, overseas time zones and apparent solar time are not applied.
 - Unknown time evaluates 1,440 minutes, omits hour pillar, reports year/month/day ambiguities. Element counts only use stable pillars. Day-master ambiguity suppresses ten gods.
 - Solar terms are minute-level; the library table is wider than the UI's supported range.
 - Day boundary can be midnight, jasi or splitJasi, as documented in the engine.

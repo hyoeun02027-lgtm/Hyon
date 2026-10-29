@@ -1,0 +1,6 @@
+node_modules/
+qa-cards/
+.openai/
+.env
+.env.*
+!.env.example

@@ -1,0 +1,16 @@
+{
+  "name": "sidae-kuong-saju",
+  "version": "1.0.0",
+  "private": true,
+  "description": "시대인재 사주 카드와 역사 이야기",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "test": "node tests/sidae-core.cjs && node tests/birth-years.cjs && node tests/history-recommend.cjs && node tests/card-match.cjs && node tests/novel-core.cjs && node tests/novel-ui.cjs && node tests/sidae-dom.cjs"
+  },
+  "devDependencies": {
+    "jsdom": "26.1.0",
+    "@napi-rs/canvas": "0.1.80"
+  }
+}
